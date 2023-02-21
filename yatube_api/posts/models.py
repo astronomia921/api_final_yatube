@@ -37,15 +37,15 @@ class Post(models.Model):
     )
     author = models.ForeignKey(
         User, verbose_name='Автор',
-        on_delete=models.CASCADE,
-        related_name='posts')
+        on_delete=models.CASCADE
+    )
     group = models.ForeignKey(
         Group,
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
         verbose_name='Сообщество',
-        help_text='Сообщество, к которой будет относиться пост',
+        help_text='Сообщество, к которому будет относиться пост',
     )
     image = models.ImageField(
         verbose_name='Изображение',
