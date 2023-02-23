@@ -12,10 +12,13 @@ class Group(models.Model):
         verbose_name='Заголовок',
     )
     slug = models.SlugField(
-        max_length=200, unique=True,
+        max_length=200,
+        unique=True,
         verbose_name='Идентификатор',
     )
-    description = models.TextField(verbose_name='Описание',)
+    description = models.TextField(
+        verbose_name='Описание',
+    )
 
     class Meta:
         verbose_name_plural = 'Сообщества'
@@ -33,11 +36,12 @@ class Post(models.Model):
     )
     pub_date = models.DateTimeField(
         verbose_name='Дата публикации',
-        auto_now_add=True
+        auto_now_add=True,
     )
     author = models.ForeignKey(
-        User, verbose_name='Автор',
-        on_delete=models.CASCADE
+        User,
+        verbose_name='Автор',
+        on_delete=models.CASCADE,
     )
     group = models.ForeignKey(
         Group,
@@ -49,7 +53,10 @@ class Post(models.Model):
     )
     image = models.ImageField(
         verbose_name='Изображение',
-        upload_to='posts/', null=True, blank=True)
+        upload_to='posts/',
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         ordering = ('id',)
@@ -65,19 +72,22 @@ class Comment(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        verbose_name='Автор'
+        verbose_name='Автор',
     )
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        verbose_name='Пост'
+        verbose_name='Пост',
     )
     text = models.TextField(
         verbose_name='Комментарий',
         help_text='Напишите ваши мысли, по поводу поста (будьте вежливы)',
     )
     created = models.DateTimeField(
-        'Дата добавления', auto_now_add=True, db_index=True)
+        verbose_name='Дата добавления',
+        auto_now_add=True,
+        db_index=True,
+    )
 
     class Meta:
         ordering = ('id',)
@@ -94,19 +104,20 @@ class Follow(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name='Подписчик',
-        related_name='follower'
+        related_name='follower',
     )
     following = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         verbose_name='Автор',
-        related_name='following'
+        related_name='following',
     )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'following'], name='unique_user_author',
+                fields=['user', 'following'],
+                name='unique_user_author',
             ),
         ]
         verbose_name_plural = 'Подписки'

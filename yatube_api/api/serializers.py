@@ -49,14 +49,6 @@ class FollowSerializer(serializers.ModelSerializer):
                 fields=['user', 'following']
             )
         ]
-        extra_kwargs = {
-            "user": {
-                "validators": [],
-            },
-            "following": {
-                "validators": [],
-            },
-        }
 
     def validate_following(self, data):
         if data == self.context.get('request').user:
